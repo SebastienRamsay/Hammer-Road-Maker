@@ -16,44 +16,57 @@ function RoadMaker:GetLerpRoad(startpos, midpos, endpos)
 end
 
 local prevangle = 0
+function RoadMaker:CreateLineRoad(startpos, endpos, width, height, rightstart, rightend, zoffset)
+	zoffset = zoffset or 0
 
-function RoadMaker:CreateLineRoad(startpos, endpos, width, height, rightstart, rightend)
 	local toend = endpos - startpos
 	local ang = toend:Angle()
 	local right = ang:Right()
-	
-	local rightstart = rightstart or right
-	local rightend = rightend or right
-	local offset = width/2
-	
-	local vert1 = startpos + rightstart*offset
-	local vert2 = startpos - rightstart*offset
-	local vert3 = endpos - rightend*offset
-	local vert4 = endpos + rightend*offset
-	
-	vert1.x = math.Round(vert1.x)
-	vert1.y = math.Round(vert1.y)
-	vert1.z = math.Round(vert1.z)
-	
-	vert2.x = math.Round(vert2.x)
-	vert2.y = math.Round(vert2.y)
-	vert2.z = math.Round(vert2.z)
-	
-	vert3.x = math.Round(vert3.x)
-	vert3.y = math.Round(vert3.y)
-	vert3.z = math.Round(vert3.z)
-	
-	vert4.x = math.Round(vert4.x)
-	vert4.y = math.Round(vert4.y)
-	vert4.z = math.Round(vert4.z)
-	
+
+	rightstart = rightstart or right
+	rightend   = rightend   or right
+
+	local offset = width / 2
+
+	local vert1 = startpos + rightstart * offset
+	local vert2 = startpos - rightstart * offset
+	local vert3 = endpos   - rightend   * offset
+	local vert4 = endpos   + rightend   * offset
+
+	-- Apply height offset (world Z)
+	vert1.z = vert1.z + zoffset
+	vert2.z = vert2.z + zoffset
+	vert3.z = vert3.z + zoffset
+	vert4.z = vert4.z + zoffset
+
+	-- Round after offset
+	vert1.x, vert1.y, vert1.z = math.Round(vert1.x), math.Round(vert1.y), math.Round(vert1.z)
+	vert2.x, vert2.y, vert2.z = math.Round(vert2.x), math.Round(vert2.y), math.Round(vert2.z)
+	vert3.x, vert3.y, vert3.z = math.Round(vert3.x), math.Round(vert3.y), math.Round(vert3.z)
+	vert4.x, vert4.y, vert4.z = math.Round(vert4.x), math.Round(vert4.y), math.Round(vert4.z)
+
 	if prevangle > ang.y then
-		self:CreateConvexHBox(vert1, vert2, vert3, vert4, height, false, 'top', 'nodraw', 'side', 'nodraw', 'side', 'bottom', 'nodraw')
+		self:CreateConvexHBox(
+			vert1, vert2, vert3, vert4,
+			height,
+			false,
+			'top', 'nodraw',
+			'side', 'nodraw',
+			'side',
+			'bottom', 'nodraw'
+		)
 	else
-		self:CreateConvexHBox(vert1, vert2, vert3, vert4, height, true, 'top', 'nodraw', 'side', 'nodraw', 'side', 'bottom', 'nodraw')
+		self:CreateConvexHBox(
+			vert1, vert2, vert3, vert4,
+			height,
+			true,
+			'top', 'nodraw',
+			'side', 'nodraw',
+			'side',
+			'bottom', 'nodraw'
+		)
 	end
-	
+
 	prevangle = ang.y
-	
 	return right
 end

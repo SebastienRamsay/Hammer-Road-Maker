@@ -22,19 +22,20 @@ function RoadMaker.UpdateMeshs(key, access)
 	VMFGenerator.brushes = {}
 	VMFGenerator.textures = {}
 	VMFGenerator.multiconvexphys = {}
-	
-	local width = RoadMaker.Cfgs['width']:GetString()
-	local height = RoadMaker.Cfgs['height']:GetString()
+
+	local width  = tonumber(RoadMaker.Cfgs['width']:GetString())
+	local height = tonumber(RoadMaker.Cfgs['height']:GetString())
+	local zoffset = tonumber(RoadMaker.Cfgs['zoffset']:GetString()) or 0
 	local p = RoadMaker.Points
 	for k, pos in ipairs(p) do
 		if p[k - 1] and p[k + 2] then
-			VMFGenerator:CreateLineRoad(pos, p[k + 1], width, height, VMFGenerator:GetLerpRoad(p[k - 1], pos, p[k + 1]), VMFGenerator:GetLerpRoad(pos, p[k + 1], p[k + 2]))
+			VMFGenerator:CreateLineRoad(pos, p[k + 1], width, height, VMFGenerator:GetLerpRoad(p[k - 1], pos, p[k + 1]), VMFGenerator:GetLerpRoad(pos, p[k + 1], p[k + 2]), zoffset)
 		elseif p[k - 1] and p[k + 1] then
-			VMFGenerator:CreateLineRoad(pos, p[k + 1], width, height, VMFGenerator:GetLerpRoad(p[k - 1], pos, p[k + 1]))
+			VMFGenerator:CreateLineRoad(pos, p[k + 1], width, height, VMFGenerator:GetLerpRoad(p[k - 1], pos, p[k + 1]), nil, zoffset)
 		elseif p[k + 1] and p[k + 2] then
-			VMFGenerator:CreateLineRoad(pos, p[k + 1], width, height, nil, VMFGenerator:GetLerpRoad(pos, p[k + 1], p[k + 2]))
+			VMFGenerator:CreateLineRoad(pos, p[k + 1], width, height, nil, VMFGenerator:GetLerpRoad(pos, p[k + 1], p[k + 2]), zoffset)
 		elseif p[k + 1] then
-			VMFGenerator:CreateLineRoad(pos, p[k + 1], width, height)
+			VMFGenerator:CreateLineRoad(pos, p[k + 1], width, height, nil, nil, zoffset)
 		end
 	end
 	

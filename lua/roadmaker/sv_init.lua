@@ -17,6 +17,7 @@ end
 
 RoadMaker:CreateCfg('width', 512)
 RoadMaker:CreateCfg('height', 64)
+RoadMaker:CreateCfg('zoffset', 0)
 RoadMaker:CreateCfg('enablephysics', 0)
 
 function RoadMaker:CreateMaterial(key, def)
