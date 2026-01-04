@@ -21,7 +21,7 @@ To display the points, enter the ***developer 1*** in console. This can cause a 
 roadmaker_enablephysics - Enable physics of the road. Set 0 to disable.
 
 roadmaker_height - Set height of the road.
-roadmaker_zoffset - Set zoffset of the road. This is useful since roadmaker_height doesn't auto correct the zoffset.
+Ramsay: roadmaker_zoffset - Set zoffset of the road. This is useful since roadmaker_height doesn't auto correct the zoffset.
 roadmaker_width - Set width of the road.
 
 roadmaker_clear - Delete all points.
